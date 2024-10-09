@@ -9,7 +9,14 @@ RUN apt update \
         apt-transport-https lsb-release ca-certificates \
     && apt install -y vim make curl gnupg2
 
-# Install Node.js 21.x
+# Download and configure CA certificates
+RUN mkdir -p /etc/ssl/certs \
+    && curl -o /etc/ssl/certs/cacert.pem https://curl.se/ca/cacert.pem
+
+RUN echo "curl.cainfo = /etc/ssl/certs/cacert.pem" > /usr/local/etc/php/conf.d/curl.ini \
+    && echo "openssl.cafile = /etc/ssl/certs/cacert.pem" >> /usr/local/etc/php/conf.d/openssl.ini
+
+# Install Node.js 22.x
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs \
     &&  npm install -g yarn
@@ -50,3 +57,5 @@ WORKDIR /var/www/html/
 
 # Copy your source file directory into /app
 COPY . /var/www/html/
+
+CMD tail -f /dev/null
