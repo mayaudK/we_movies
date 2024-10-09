@@ -25,8 +25,6 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen  \
     &&  echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
     &&  locale-gen
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -44,13 +42,15 @@ RUN apt clean \
     &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     &&  rm -rf /usr/share/doc /usr/share
 
-## Add permissions to ubuntu user
-#ARG USER_ID=1000
-#ARG GROUP_ID=1000
-#
-#RUN usermod -u $USER_ID www-data \
-#    &&  groupmod -g $GROUP_ID www-data \
-#    &&  chown -R www-data:www-data /var/www/html
+# Add permissions to ubuntu user
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+RUN usermod -u $USER_ID www-data \
+    &&  groupmod -g $GROUP_ID www-data \
+    &&  chown -R www-data:www-data /var/www/
+
+USER www-data
 
 # Change to /app
 WORKDIR /var/www/html/
