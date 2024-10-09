@@ -1,3 +1,98 @@
 body {
-    background-color: skyblue;
+    width : 70%;
+    background-color: white;
+    justify-content: center;
+    margin: 0 15%;
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.sidebar {
+    flex: 1 0; /* 2 fois plus petit que le main */
+    background-color: #8bc7ff;
+}
+
+.movieList {
+    flex: 2 0; /* 2 fois plus grand que le sidebar */
+    background-color: #555555;
+}
+
+.video_player{
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+    }
+}
+
+.video_player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.suggestions {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: black 1px solid;
+}
+
+.suggestion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: black 1px solid;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    position: relative;
+    border-radius: 5%;
+}
+
+input[type="radio"]:checked::before {
+    content: '✓';
+    color: white;
+    background-color: #808080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+
 }

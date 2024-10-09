@@ -25,11 +25,6 @@ class TmdbApiService implements ApiInterface
         $this->apiBearerToken = $apiBearerToken;
     }
 
-    public function getMoviesByGenre(string $genre)
-    {
-        return $this->fetch('GET', '/movies?genre=' . $genre);
-    }
-
     public function fetchTrailerByMovieId(int $movieId) : array
     {
         $videos = $this->fetchVideosByMovieId($movieId);
@@ -71,10 +66,11 @@ class TmdbApiService implements ApiInterface
         ];
     }
 
-    public function searchByGenre(string $genre) : array
+    public function fetchMoviesByGenre(string $genre) : array
     {
         $response = $this->fetch('GET', '/discover/movie?with_genres=' . $genre . '&' . self::RESULTS_LANGUAGE);
-        return json_decode($response->getContents(), true)['results'];
+        $results = json_decode($response->getContents(), true)['results'];
+        return $results;
     }
 
     public function searchByTitle(string $title) : array

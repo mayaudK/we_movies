@@ -10,6 +10,7 @@ document.getElementById('autocomplete').addEventListener('input', function() {
     fetch(`/autocomplete?query=${query}`)
         .then(response => response.json())
         .then(data => {
-            document.getElementById('suggestions').innerHTML = data.map(item => `<div>${item.title}</div>`).join('');
+            document.getElementById('suggestions').css('display', 'flex');
+            document.getElementById('suggestions').innerHTML = data.map(item => `<div class="suggestion">${item.title}</div>`).join('');
         });
 });

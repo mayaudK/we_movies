@@ -5,25 +5,26 @@
 {% block body %}
 
 
-    <div class="flex">
-        <div>A propos de We Movies</div>
+    <div class="navbar">
+        <h1>A propos de We Movies</h1>
         <div>
             <input type="text" id="autocomplete" placeholder="Search for movies...">
-            <div id="suggestions"></div>
+            <div id="suggestions" class="suggestions"></div>
 
             <script src="{{ asset('js/autocomplete.js') }}"></script>
         </div>
     </div>
-    <div>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ first_best_movie.video.key }}?si=bTpWukwStPLZ_Xrj" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <div class="flex">
-        <div>
+    <main class="page">
+        <div class="video_player">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ first_best_movie.video.key }}?si=bTpWukwStPLZ_Xrj" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="sidebar">
             {% include 'tmdb/genreList.html.twig' %}
         </div>
-        <div>
+        <div class="movieList">
             {% include 'tmdb/movieList.html.twig' %}
         </div>
-    </div>
+        </div>
+    </main>
 
 {% endblock %}

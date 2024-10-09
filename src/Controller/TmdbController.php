@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TmdbController extends AbstractController
 {
-    #[Route('/tmdb', name: 'app_tmdb')]
+    #[Route('/', name: 'app_tmdb')]
     public function index(TmdbApiService $tmdbService, CacheService $cacheService): Response
     {
         $cacheGenreKey = 'tmdb_genres';
@@ -22,7 +22,6 @@ class TmdbController extends AbstractController
         return $this->render('tmdb/index.html.twig', [
             'first_best_movie' => $firstBestMovie,
             'genres' => $genres,
-//            'movie_list' => $tmdbService->getMoviesByGenre($firstBestMovie['genre_id'])
         ]);
     }
 
@@ -33,5 +32,13 @@ class TmdbController extends AbstractController
         $results = $autocompleteService->getAutocompleteSuggestions($query);
 
         return $this->json($results);
+    }
+    #[Route('/moviesByGenre/{genre}', name: 'app_movies_by_genre')]
+    public function getMoviesByGenre(Request $request, TmdbApiService $tmdbService, CacheService $cacheService, string $genre): Response
+    {
+        $movies = $cacheService->getItemsFromCache('tmdb_movies_' . $genre, function() use ($tmdbService, $genre) {
+            return $tmdbService->fetchMoviesByGenre($genre);
+        });
+        return $this->json($movies);
     }
 }
