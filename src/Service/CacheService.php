@@ -14,22 +14,22 @@ class CacheService
         $this->cache = $cache;
     }
 
-    public function getGenresFromCache(string $cacheKey, callable $fetchGenresCallback)
+    public function getItemsFromCache(string $cacheKey, callable $fetchItemCallback)
     {
         $cachedItem = $this->cache->getItem($cacheKey);
         if (!$cachedItem->isHit()) {
-            $genresById = $fetchGenresCallback();
-            $this->cacheGenres($cachedItem, $genresById);
+            $itemContent = $fetchItemCallback();
+            $this->cacheItem($cachedItem, $itemContent);
         } else {
-            $genresById = $cachedItem->get();
+            $itemContent = $cachedItem->get();
         }
 
-        return $genresById;
+        return $itemContent;
     }
 
-    private function cacheGenres($cachedItem, $genresById)
+    private function cacheItem($cachedItem, $itemContent)
     {
-        $cachedItem->set($genresById);
+        $cachedItem->set($itemContent);
         $cachedItem->expiresAfter(self::ONE_HOUR_CACHE_IN_SECONDS);
         $this->cache->save($cachedItem);
     }

@@ -1,0 +1,7 @@
+{# Liste clé valeur avec une checkbox radio qui comprends un fetch #}
+{% for id, genre in genres %}
+    <div class="form-check">
+        <input class="form-check input" type="radio" id="{{ id }}" name="genre" value="{{ id }}">
+        <label class="form-check-label" for="{{ id }}">{{ genre }}</label>
+    </div>
+{% endfor %}
