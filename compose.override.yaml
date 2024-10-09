@@ -4,7 +4,7 @@ services:
     container_name: php
     build: Docker/php
     ports:
-      - "8080:8000"
+      - "8080:9000"
     volumes:
         - .:/var/www/html
 ###> doctrine/doctrine-bundle ###

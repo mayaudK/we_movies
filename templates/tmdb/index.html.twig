@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TmdbController!{% endblock %}
+
+{% block body %}
+
+{% for id,genre in genres %}
+    <h1>{{ id }} -- {{ genre }}</h1>
+{% endfor %}
+
+{% endblock %}
