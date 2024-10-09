@@ -6,30 +6,16 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class AutocompleteService
 {
-    private $client;
-    private $cache;
-    private $apiKey;
+    private CacheService $cacheService;
 
-    public function __construct(TmdbApiService $tmdbApiService, CacheItemPoolInterface $cache)
+    public function __construct(TmdbApiService $tmdbApiService, CacheService $cacheService)
     {
         $this->tmdbApiService = $tmdbApiService;
-        $this->cache = $cache;
+        $this->cacheService = $cacheService;
     }
 
     public function getAutocompleteSuggestions(string $query) : array {
-        $cacheKey = 'autocomplete_' . md5($query);
-        $cachedItem = $this->cache->getItem($cacheKey);
-
-        if (!$cachedItem->isHit()) {
-            $data = $this->tmdbApiService->searchByTitle($query);
-
-            $cachedItem->set($data);
-            $cachedItem->expiresAfter(3600); // Cache for 1 hour
-            $this->cache->save($cachedItem);
-        } else {
-            $data = $cachedItem->get();
-        }
-
-        return $data;
+        $autocompleteCacheKey = 'autocomplete_' . $query;
+        return $this->cacheService->getItemsFromCache($autocompleteCacheKey, [$this->tmdbApiService, 'searchByTitle'], $query);
     }
 }

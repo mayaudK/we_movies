@@ -14,11 +14,11 @@ class CacheService
         $this->cache = $cache;
     }
 
-    public function getItemsFromCache(string $cacheKey, callable $fetchItemCallback)
+    public function getItemsFromCache(string $cacheKey, callable $fetchItemCallback, $param = null)
     {
         $cachedItem = $this->cache->getItem($cacheKey);
         if (!$cachedItem->isHit()) {
-            $itemContent = $fetchItemCallback();
+            $itemContent = $fetchItemCallback($param);
             $this->cacheItem($cachedItem, $itemContent);
         } else {
             $itemContent = $cachedItem->get();
