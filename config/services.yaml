@@ -23,7 +23,6 @@ services:
 
     App\Service\TmdbApiService:
         arguments:
-            $apiKey: '%env(TMDB_API_KEY)%'
             $baseUrl: '%base_url_tmdb_api%'
             $apiBearerToken: '%env(TMDB_BEARER_TOKEN)%'
 
