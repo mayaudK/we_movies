@@ -79,7 +79,13 @@ class TmdbApiService implements ApiInterface
         return json_decode($response->getContents(), true)['results'];
     }
 
-    public function fetch(string $method, string $endpoint, array $options = []) : array | StreamInterface
+    public function fetchMovieById(int $movieId) : array
+    {
+        $response = $this->fetch('GET', '/movie/' . $movieId . '?' . self::RESULTS_LANGUAGE);
+        return json_decode($response->getContents(), true);
+    }
+
+    public function fetch(string $method, string $endpoint, array $options = [], int $limit = 7) : array | StreamInterface
     {
         if (empty($options)) {
             $options = [

@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TmdbController!{% endblock %}
+{% block title %}We Movies{% endblock %}
 
 {% block body %}
-
-
     <div class="navbar">
         <h1>A propos de We Movies</h1>
         <div>
@@ -16,15 +14,16 @@
     </div>
     <main class="page">
         <div class="video_player">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ first_best_movie.video.key }}?si=bTpWukwStPLZ_Xrj" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/{{ first_best_movie.video.key }}?si=bTpWukwStPLZ_Xrj" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <div class="sidebar">
+        <div class="genre-list">
             {% include 'tmdb/genreList.html.twig' %}
         </div>
         <div class="movieList">
             {% include 'tmdb/movieList.html.twig' %}
         </div>
-        </div>
     </main>
+
+    {% include 'tmdb/movieModal.html.twig' %}
 
 {% endblock %}

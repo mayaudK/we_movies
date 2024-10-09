@@ -36,9 +36,27 @@ class TmdbController extends AbstractController
     #[Route('/moviesByGenre/{genre}', name: 'app_movies_by_genre')]
     public function getMoviesByGenre(Request $request, TmdbApiService $tmdbService, CacheService $cacheService, string $genre): Response
     {
-        $movies = $cacheService->getItemsFromCache('tmdb_movies_' . $genre, function() use ($tmdbService, $genre) {
+        $movies = $cacheService->getItemsFromCache('tmdb_movies_by_genre' . $genre, function() use ($tmdbService, $genre) {
             return $tmdbService->fetchMoviesByGenre($genre);
         });
         return $this->json($movies);
+    }
+
+    #[Route('/movie/{movieId}', name: 'app_movie_details')]
+    public function getMovieDetails(TmdbApiService $tmdbService, CacheService $cacheService, int $movieId): Response
+    {
+        $movie = $cacheService->getItemsFromCache('tmdb_movie_details' . $movieId, function() use ($tmdbService, $movieId) {
+            return $tmdbService->fetchMovieById($movieId);
+        });
+        return $this->json($movie);
+    }
+
+    #[Route('/movie/{movieId}/trailer', name: 'app_movie_videos')]
+    public function getTrailerVideo(TmdbApiService $tmdbService, CacheService $cacheService, int $movieId): Response
+    {
+        $videos = $cacheService->getItemsFromCache('tmdb_movie_videos' . $movieId, function() use ($tmdbService, $movieId) {
+            return $tmdbService->fetchTrailerByMovieId($movieId);
+        });
+        return $this->json($videos);
     }
 }
