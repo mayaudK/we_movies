@@ -29,6 +29,6 @@ install_dependencies:
 run:
 	make install_dependencies
 	make compile_assets
-	make start_server
+	#make start_server
 	
 	

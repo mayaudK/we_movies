@@ -58,4 +58,4 @@ WORKDIR /var/www/html/
 # Copy your source file directory into /app
 COPY . /var/www/html/
 
-CMD tail -f /dev/null
+CMD ["php-fpm"]
