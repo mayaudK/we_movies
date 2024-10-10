@@ -19,7 +19,6 @@ body {
 
 .movieList {
     flex: 2 0; /* 2 fois plus grand que le sidebar */
-    background-color: #555555;
 }
 
 .movie {
@@ -111,19 +110,22 @@ body {
 }
 .suggestions {
     display: none;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border: black 1px solid;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #c3c0c0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .suggestion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    border-bottom: black 1px solid;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background-color: #f0f0f0;
 }
 
 input[type="radio"] {
