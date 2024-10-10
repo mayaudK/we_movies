@@ -69,4 +69,12 @@ class TmdbController extends AbstractController
         });
         return $this->json($movies);
     }
+
+    #[Route('/rateMovie/{movieId}/{rating}', name: 'app_rate_movie')]
+    public function AddRating(TmdbApiService $tmdbService, int $movieId, int $rating): Response
+    {
+        $movie = $tmdbService->postRatingMovie($movieId, $rating);
+        $movie['rating'] = $rating;
+        return $this->json($movie);
+    }
 }

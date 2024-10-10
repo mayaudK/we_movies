@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch(`/movie/${movieId}`);
             const movie = await response.json();
             const videoKey = await getYoutubeVideoKey(movie.id);
-            showModal(movie, videoKey);
+            showMovieModal(movie, videoKey);
         }
     });
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // fetch movie details into a modal when clicking on a button
     // Function to fill and display the modal with movie details
-    async function showModal(movie, videoKey) {
+    async function showMovieModal(movie, videoKey) {
         document.getElementById('modalTitle').innerText = movie.title;
         document.getElementById('modalVoteCount').innerText = movie.vote_count;
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const movieId = this.closest('.rating').getAttribute('data-movie-id');
 
             try {
-                const response = await fetch(`/rateMovie/${movieId}`, {
+                const response = await fetch(`/rateMovie/${movieId}/${rating}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -121,6 +121,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+        const modal = document.getElementById('voteModal');
+        const closeModal = document.querySelector('.modal .close');
+
+        function showModal() {
+            modal.style.display = 'block';
+        }
+
+        function hideModal() {
+            modal.style.display = 'none';
+        }
+
+        function handleStarClick() {
+            showModal();
+        }
+
+        function initStarRating() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', handleStarClick);
+            });
+        }
+
+        closeModal.addEventListener('click', hideModal);
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                hideModal();
+            }
+        });
+
+        initStarRating();
 
 });
 

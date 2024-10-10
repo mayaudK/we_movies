@@ -115,6 +115,7 @@ body {
     overflow-y: auto;
     position: absolute;
     background-color: #c3c0c0;
+    border-radius: 4px;
     width: 100%;
     z-index: 1000;
 }
@@ -155,6 +156,16 @@ input[type="radio"]:checked::before {
     top: 0;
     left: 0;
     border-radius: 5px;
+}
+
+#autocomplete {
+    width: 100%;
+    padding: 10px 20px 10px 40px; /* Add padding to the left for the icon */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ccc" viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.293 14.707l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/></svg>') no-repeat 10px center;
+    background-size: 20px 20px; /* Adjust the size of the icon */
 }
 
 /* Style pour la modale */
@@ -211,7 +222,6 @@ input[type="radio"]:checked::before {
 /* assets/styles/app.css */
 .rating {
     display: flex;
-    flex-direction: row-reverse;
     justify-content: center;
 }
 

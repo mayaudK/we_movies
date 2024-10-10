@@ -8,7 +8,7 @@
             <div class="movieContent">
                 <div class="titleRateContainer">
                     <h2>{{ movie.title }}</h2>
-                    <div class="titleRate">Rating: {{ movie.vote_average }}</div>
+                    <div class="titleRate">{% include 'components/starRating.html.twig' with { 'movieId': movie.id } %}</div>
                     <div class="titleRate">({{ movie.vote_count }} votes)</div>
                 </div>
                 <div class="release-date">{{ year }}</div><!--Studios-->
@@ -16,7 +16,10 @@
                 <div class="button-container">
                     <button class="button" id="{{ movie.id }}">Lire le détail</button>
                 </div>
+
             </div>
         </div>
     {% endfor %}
 </div>
+
+{% include 'tmdb/voteModal.html.twig' %}

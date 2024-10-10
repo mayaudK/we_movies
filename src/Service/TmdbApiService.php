@@ -91,6 +91,20 @@ class TmdbApiService implements ApiInterface
         return json_decode($response->getContents(), true)['results'];
     }
 
+    public function postRatingMovie(int $movieId, int $rating) : array
+    {
+        $response = $this->fetch('POST', '/movie/' . $movieId . '/rating', [
+            'json' => [
+                'value' => $rating,
+            ],
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiBearerToken,
+                'accept' => 'application/json',
+            ],
+        ]);
+        return json_decode($response->getContents(), true);
+    }
+
     public function fetch(string $method, string $endpoint, array $options = [], int $limit = 7) : array | StreamInterface
     {
         if (empty($options)) {
