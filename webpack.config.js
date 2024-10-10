@@ -21,23 +21,11 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('autocomplete', './assets/js/autocomplete.js')
+    .addStyleEntry('cssApp', './assets/styles/app.css')
+
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
-    .addLoader({
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-            {
-                loader: 'babel-loader',
-                options: {
-                    cacheDirectory: true,
-                },
-            },
-        ],
-    })
-
-
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
