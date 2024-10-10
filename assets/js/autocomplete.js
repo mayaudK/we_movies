@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    suggestionsContainer.addEventListener('click', function (event) {
+    suggestionsContainer.addEventListener('click', async function (event) {
         if (event.target.classList.contains('suggestion')) {
             const movieId = event.target.getAttribute('data-movie-id');
             const movie = moviesData[movieId];

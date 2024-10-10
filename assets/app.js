@@ -9,16 +9,15 @@ import './styles/app.css';
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Event listener for fetching movie details and showing the modal{
-    document.body.addEventListener('click', async function(event) {
+    document.body.addEventListener('click', async function (event) {
         if (event.target.tagName === 'BUTTON') {
-            console.log(event.target);
             const movieId = event.target.id;
             const response = await fetch(`/movie/${movieId}`);
             const movie = await response.json();
             const videoKey = await getYoutubeVideoKey(movie.id);
-            showMovieModal(movie, videoKey);
+            await showMovieModal(movie, videoKey);
         }
     });
 
@@ -50,40 +49,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // fetch movie details into a modal when clicking on a button
-    // Function to fill and display the modal with movie details
     async function showMovieModal(movie, videoKey) {
-        document.getElementById('modalTitle').innerText = movie.title;
-        document.getElementById('modalVoteCount').innerText = movie.vote_count;
-
+        document.getElementById('modalTitleH2').innerText = `${movie.title} Bande-annonce`;
+        document.getElementById('modalTitle').innerText = `Film: ${movie.title} - Année de sortie: ${new Date(movie.release_date).getFullYear()} - `;
+        document.getElementById('modalVoteCount').innerText = ` pour ${movie.vote_count} utilisateurs`;
         document.getElementById('modalVideoPlayer').innerHTML = `
                 <iframe src="https://www.youtube.com/embed/${videoKey}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         `;
-        const modal = document.getElementById('movieModal');
-        modal.style.display = "block";
+        const movieModal = document.getElementById('movieModal');
+        movieModal.style.display = "block";
 
         document.querySelector('.close').onclick = function () {
-            modal.style.display = "none";
+            movieModal.style.display = "none";
         }
 
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == movieModal) {
+                movieModal.style.display = "none";
             }
         }
     }
 
-    // function to fetch video key from tmdb api
     async function getYoutubeVideoKey(movieId) {
         const response = await fetch(`/movie/${movieId}/trailer`);
         const video = await response.json();
-        console.log({video});
         return video.key;
     }
 
 
     document.querySelectorAll('.star').forEach(star => {
-        star.addEventListener('click', async function() {
+        star.addEventListener('click', async function () {
             const rating = this.getAttribute('data-value');
             const movieId = this.closest('.rating').getAttribute('data-movie-id');
 
@@ -93,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ rating: rating })
+                    body: JSON.stringify({rating: rating})
                 });
 
                 if (response.ok) {
@@ -121,37 +116,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-        const modal = document.getElementById('voteModal');
-        const closeModal = document.querySelector('.modal .close');
+    const modalVote = document.getElementById('voteModal');
+    const closeModal = document.querySelector('.modal .close');
 
-        function showModal() {
-            modal.style.display = 'block';
-        }
+    function showModalVote() {
+        modalVote.style.display = 'block';
+    }
 
-        function hideModal() {
-            modal.style.display = 'none';
-        }
+    function hideModalVote() {
+        modalVote.style.display = 'none';
+    }
 
-        function handleStarClick() {
-            showModal();
-        }
+    function handleStarClick() {
+        showModalVote();
+    }
 
-        function initStarRating() {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach(star => {
-                star.addEventListener('click', handleStarClick);
-            });
-        }
-
-        closeModal.addEventListener('click', hideModal);
-        window.addEventListener('click', function(event) {
-            if (event.target == modal) {
-                hideModal();
-            }
+    function initStarRating() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach(star => {
+            star.addEventListener('click', handleStarClick);
         });
+    }
 
-        initStarRating();
+    closeModal.addEventListener('click', hideModalVote);
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            hideModalVote();
+        }
+    });
 
+    initStarRating();
 });
 
 

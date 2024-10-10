@@ -22,7 +22,7 @@ class TmdbController extends AbstractController
         return $this->render('tmdb/index.html.twig', [
             'first_best_movie' => $firstBestMovie,
             'genres' => $genres,
-            'top_rated_movies' => $cacheService->getItemsFromCache('tmdb_top_rated_movies', [$tmdbService, 'fetchTopRatedMovies']),
+            'movies' => $cacheService->getItemsFromCache('tmdb_top_rated_movies', [$tmdbService, 'fetchTopRatedMovies']),
         ]);
     }
 
