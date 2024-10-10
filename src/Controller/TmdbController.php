@@ -22,6 +22,7 @@ class TmdbController extends AbstractController
         return $this->render('tmdb/index.html.twig', [
             'first_best_movie' => $firstBestMovie,
             'genres' => $genres,
+            'top_rated_movies' => $cacheService->getItemsFromCache('tmdb_top_rated_movies', [$tmdbService, 'fetchTopRatedMovies']),
         ]);
     }
 
@@ -54,9 +55,18 @@ class TmdbController extends AbstractController
     #[Route('/movie/{movieId}/trailer', name: 'app_movie_videos')]
     public function getTrailerVideo(TmdbApiService $tmdbService, CacheService $cacheService, int $movieId): Response
     {
-        $videos = $cacheService->getItemsFromCache('tmdb_movie_videos' . $movieId, function() use ($tmdbService, $movieId) {
+        $videos = $cacheService->getItemsFromCache('tmdb_movie_trailer' . $movieId, function() use ($tmdbService, $movieId) {
             return $tmdbService->fetchTrailerByMovieId($movieId);
         });
         return $this->json($videos);
+    }
+
+    #[Route('/movie/topRatedMovies', name: 'app_top_rated_movie')]
+    public function getTopRatedMovies(TmdbApiService $tmdbService, CacheService $cacheService): Response
+    {
+        $movies = $cacheService->getItemsFromCache('tmdb_top_rated_movies', function() use ($tmdbService) {
+            return $tmdbService->fetchTopRatedMovies();
+        });
+        return $this->json($movies);
     }
 }
