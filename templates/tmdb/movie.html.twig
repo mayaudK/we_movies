@@ -1,0 +1,18 @@
+{#{{ dump(movie) }}#}
+<div class="movie">
+    <div class="container-image">
+        <img class="image" src="https://image.tmdb.org/t/p/original/{{ movie.poster_path }}" alt="{{ movie.title }}">
+    </div>
+    <div class="movieContent">
+        <div class="titleRateContainer">
+            <h2>{{ movie.title }}</h2>
+            <div class="titleRate">{% include 'components/starRating.html.twig' with { 'movieId': movie.id } %}</div>
+            <div class="titleRate">({{ movie.vote_count }} votes)</div>
+        </div>
+        <div class="release-date">{{ movie.release_date|date('Y') }}</div><!--Studios-->
+        <div class="movie-overview">{{ movie.overview }}</div>
+        <div class="button-container">
+            <button class="button" id="{{ movie.id }}">Lire le détail</button>
+        </div>
+    </div>
+</div>
